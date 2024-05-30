@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block content %}
+<h1 style="text-align: center; margin-top: 35px; margin-bottom: 40px">
+  Show Task
+</h1>
+<div class="d-flex flex-wrap justify-content-center px-5 pt-5">
+  {% for to_do in data %}
+  <div class="col-sm-3">
+    <div class="card m-2" style="border: none">
+      <div class="card-body">
+        <h5 class="card-title">{{to_do.id}}</h5>
+
+        <p
+          class="card-text"
+          style="font-size: 14px; color: #626262; font-style: italic"
+        >
+          {{to_do.taskDate}}
+        </p>
+        <hr />
+        <p style="font-size: 18px">{{to_do.taskDescription}}</p>
+        <hr />
+        <p>
+          Category : {% for cat in to_do.category.all %}
+          <button
+            class="btn btn-sm m-1"
+            style="background-color: #bacff4; border: none; color: black"
+            disabled
+          >
+            {{cat.name}}
+          </button>
+          {% endfor %}
+        </p>
+
+        {% if to_do.is_completed %}
+        <a href="" class="btn btn-danger" style="cursor: context-menu"
+          >Completed</a
+        >
+        {% else %}
+        <a href="{% url 'edit_task' to_do.id %}" class="btn btn-warning"
+          >Edit</a
+        >
+        <a href="{% url 'delete_task' to_do.id %}" class="btn btn-primary m-2"
+          >Delete</a
+        >
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}
